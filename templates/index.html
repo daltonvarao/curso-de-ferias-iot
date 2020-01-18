@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IoT Server</title>
+</head>
+<body>
+  <h1>IoT Server</h1>
+
+  <button id="action-btn"></button>
+
+  <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
+  <script>
+    let socket = io()
+    
+    let btnLigar = document.getElementById('action-btn')
+    let statusLed = ''
+
+    socket.on('connect', function(sock) {
+      console.log('Connected!')
+    })
+
+    btnLigar.onclick = function(){
+      socket.emit('action', statusLed == 'on' ? 'off' : 'on')
+    }
+
+    socket.on('status-led', function(status){
+      btnLigar.innerHTML = status == 'on' ? 'Desligar' : 'Ligar'
+      statusLed = status
+    })
+  </script>
+</body>
+</html>
