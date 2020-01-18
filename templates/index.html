@@ -4,12 +4,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>IoT Server</title>
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <h1>IoT Server</h1>
-
-  <button id="action-btn"></button>
-
+  <header>
+    <h1>IoT Server</h1>
+  </header>
+  <div class="button-container">
+    <button id="action-btn"></button>
+  </div>
   <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
   <script>
     let socket = io()
@@ -23,12 +26,27 @@
 
     btnLigar.onclick = function(){
       socket.emit('action', statusLed == 'on' ? 'off' : 'on')
+      console.log(statusLed)
     }
 
-    socket.on('status-led', function(status){
-      btnLigar.innerHTML = status == 'on' ? 'Desligar' : 'Ligar'
+    socket.on('status-led', function(status) {
+      status == 'on' ? bulbOn() : bulbOff()
       statusLed = status
     })
+    
+    function bulbOn() {
+      changeBulb('bulb-off', 'bulb-on')
+    }
+
+    function bulbOff() {
+      changeBulb('bulb-on', 'bulb-off')
+    }
+
+    function changeBulb(oldClass, newClass) {
+      btnLigar.classList.add(newClass)
+      btnLigar.classList.remove(oldClass)
+    }
+
   </script>
 </body>
 </html>

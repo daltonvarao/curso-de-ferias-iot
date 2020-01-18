@@ -5,7 +5,11 @@ from socket_io import socketio
 import service
 
 
-app = Flask(__name__)
+app = Flask(
+    __name__,
+    static_folder='static',
+    static_url_path=''
+    )
 
 app.config['SECRET_KEY'] = 'ih6cep2-s1dck4n-in89ons-d2dd3fn-ws3dj0s'
 app.config['DEBUG'] = True
