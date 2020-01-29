@@ -47,4 +47,4 @@ def subscribe_on_broker(client, userdata, flags, rc):
 
 
 if __name__ == "__main__":
-    socketio.run(app)
+    socketio.run(app, debug=True)
